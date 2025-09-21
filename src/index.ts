@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import * as core from '@actions/core';
-import {GitHub, Manifest, CreatedRelease, PullRequest, VERSION} from 'release-please';
+import {GitHub, Manifest, CreatedRelease, PullRequest, VERSION} from '@aigne/release-please';
 
 const DEFAULT_CONFIG_FILE = 'release-please-config.json';
 const DEFAULT_MANIFEST_FILE = '.release-please-manifest.json';
@@ -45,6 +45,7 @@ interface ActionInputs {
   changelogHost: string;
   versioningStrategy?: string;
   releaseAs?: string;
+  releaseStable?: boolean
 }
 
 function parseInputs(): ActionInputs {
@@ -69,6 +70,7 @@ function parseInputs(): ActionInputs {
     changelogHost: core.getInput('changelog-host') || DEFAULT_GITHUB_SERVER_URL,
     versioningStrategy: getOptionalInput('versioning-strategy'),
     releaseAs: getOptionalInput('release-as'),
+    releaseStable: getOptionalBooleanInput('release-stable') || false,
   };
   return inputs;
 }
@@ -104,6 +106,7 @@ function loadOrBuildManifest(
       {
         fork: inputs.fork,
         skipLabeling: inputs.skipLabeling,
+        releaseStable: inputs.releaseStable
       },
       inputs.path
     );

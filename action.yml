@@ -74,6 +74,10 @@ inputs:
     description: 'The version to release as.'
     required: false
     default: ''
+  release-stable:
+    description: 'If set, bump all prerelease versions to stable versions.'
+    required: false
+    default: false
 runs:
   using: 'node20'
   main: 'dist/index.js'
