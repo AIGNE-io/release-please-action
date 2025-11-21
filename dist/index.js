@@ -105693,15 +105693,15 @@ async function main(fetchOverride) {
     core.info(`Running release-please version: ${release_please_1.VERSION}`);
     const inputs = parseInputs();
     const github = await getGitHubInstance(inputs, fetchOverride);
-    if (!inputs.skipGitHubRelease) {
-        const manifest = await loadOrBuildManifest(github, inputs);
-        core.debug('Creating releases');
-        outputReleases(await manifest.createReleases());
-    }
     if (!inputs.skipGitHubPullRequest) {
         const manifest = await loadOrBuildManifest(github, inputs);
         core.debug('Creating pull requests');
         outputPRs(await manifest.createPullRequests());
+    }
+    if (!inputs.skipGitHubRelease) {
+        const manifest = await loadOrBuildManifest(github, inputs);
+        core.debug('Creating releases');
+        outputReleases(await manifest.createReleases());
     }
 }
 exports.main = main;

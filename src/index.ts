@@ -141,16 +141,16 @@ export async function main(fetchOverride?: any) {
   const inputs = parseInputs();
   const github = await getGitHubInstance(inputs, fetchOverride);
 
-  if (!inputs.skipGitHubRelease) {
-    const manifest = await loadOrBuildManifest(github, inputs);
-    core.debug('Creating releases');
-    outputReleases(await manifest.createReleases());
-  }
-
   if (!inputs.skipGitHubPullRequest) {
     const manifest = await loadOrBuildManifest(github, inputs);
     core.debug('Creating pull requests');
     outputPRs(await manifest.createPullRequests());
+  }
+
+  if (!inputs.skipGitHubRelease) {
+    const manifest = await loadOrBuildManifest(github, inputs);
+    core.debug('Creating releases');
+    outputReleases(await manifest.createReleases());
   }
 }
 
